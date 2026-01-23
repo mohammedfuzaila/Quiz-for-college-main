@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Modern Professional Architecture */
+        :root {
+            --college-navy: #1a0033;
+            --college-blue: #3c096c;
+            --college-light-blue: #7b2cbf;
+            --college-purple-glow: #9d4edd;
+            --college-white: #ffffff;
+            --college-gray: #fff3b0;
+            /* Light gold tint for secondary text */
+            --gold-accent: #ffea00;
+            --gold-glow: rgba(255, 234, 0, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(16px) saturate(180%);
+            --shadow-soft: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at center, #30005d 0%, #1a0033 100%);
+            background-attachment: fixed;
+            color: var(--college-white);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Tech Background Animation */
+        .tech-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .tech-icon {
+            position: absolute;
+            color: var(--gold-accent);
+            opacity: 0;
+            animation: flow 20s infinite linear;
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--gold-glow));
+        }
+
+        @keyframes flow {
+            0% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.15;
+            }
+
+            80% {
+                opacity: 0.15;
+            }
+
+            100% {
+                transform: translateY(-20vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Professional Header */
+        .college-header {
+            background: linear-gradient(135deg, rgba(60, 0, 110, 0.85) 0%, rgba(30, 0, 60, 0.85) 100%);
+            backdrop-filter: blur(12px);
+            color: var(--college-white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 234, 0, 0.3);
+        }
+
+        .college-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .college-logo {
+            width: 90px;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .college-logo img {
+            width: 100%;
+            height: auto;
+            /* Professional Gold Filter */
+            filter: brightness(0) saturate(100%) invert(85%) sepia(85%) saturate(1512%) hue-rotate(0deg) brightness(104%) contrast(105%) drop-shadow(0 0 15px var(--gold-glow));
+        }
+
+        .college-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--college-navy);
+        }
+
+        .college-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .college-text .subtitle {
+            font-size: 0.95rem;
+            opacity: 1;
+            color: var(--gold-accent);
+            font-weight: 500;
+        }
+
+        /* Stats Panel */
+        .stats-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--college-white);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 1;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--college-white);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(255, 234, 0, 0.25);
+            border-color: var(--gold-accent);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 5px var(--gold-glow));
+        }
+
+        .dashboard-card h3 {
+            color: var(--gold-accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .dashboard-card p {
+            color: var(--college-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Round Cards */
+        .rounds-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .round-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .round-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--gold-accent);
+            box-shadow: 0 15px 45px rgba(255, 234, 0, 0.15);
+        }
+
+        .round-card.completed {
+            display: none;
+        }
+
+        .round-card.completed:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .round-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .round-number {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--college-blue), var(--college-navy));
+            color: var(--gold-accent);
+            border: 2px solid var(--gold-accent);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .round-title {
+            font-size: 1.4rem;
+            color: var(--gold-accent);
+            font-weight: 700;
+        }
+
+        .round-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(26, 35, 126, 0.05);
+            border-radius: var(--radius);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .detail-icon {
+            color: var(--gold-accent);
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 3px var(--gold-glow));
+        }
+
+        .detail-text {
+            color: var(--college-slate);
+            font-size: 0.95rem;
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: var(--college-white);
+        }
+
+        .round-description {
+            color: var(--college-gray);
+            margin: 1.2rem 0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--gold-accent) 0%, #ff9e00 100%);
+            color: #1a0033;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 15px rgba(251, 204, 5, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .start-btn:hover::after {
+            left: 100%;
+            top: 100%;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(255, 234, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* Round Screen */
+        .round-screen {
+            display: none;
+        }
+
+        .round-top-bar {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 1.5rem 2.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--gold-accent);
+            color: var(--gold-accent);
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background: var(--gold-accent);
+            color: #1a0033;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        .round-details-panel {
+            flex: 1;
+        }
+
+        .round-details-panel h2 {
+            color: var(--gold-accent);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .round-details-panel p {
+            color: var(--college-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: rgba(48, 0, 93, 0.4);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 234, 0, 0.2);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-title {
+            color: var(--college-white);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .progress-count {
+            color: var(--college-blue);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--college-cream);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold-accent), #ff9900);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(251, 204, 5, 0.4);
+        }
+
+        /* Different Grid Sizes for Each Round */
+        .numbers-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(48, 0, 93, 0.4);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 234, 0, 0.2);
+        }
+
+        /* Grid sizes for each round */
+        .grid-round-1 {
+            grid-template-columns: repeat(8, 1fr);
+            /* 40 questions */
+        }
+
+        .grid-round-2 {
+            grid-template-columns: repeat(5, 1fr);
+            /* 20 questions */
+        }
+
+        .grid-round-3 {
+            grid-template-columns: repeat(5, 1fr);
+            /* 15 questions */
+        }
+
+        /* Make number buttons same size */
+        .number-btn {
+            aspect-ratio: 1;
+            min-width: 50px;
+            min-height: 50px;
+            width: 100%;
+            max-width: 70px;
+            /* Add maximum size */
+            height: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-round-1 {
+                grid-template-columns: repeat(8, 1fr);
+            }
+
+            .grid-round-2 {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .grid-round-3 {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .number-btn {
+                max-width: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-round-1 {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .grid-round-2 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .grid-round-3 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .number-btn {
+                max-width: 55px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-round-1 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .grid-round-2 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .grid-round-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .number-btn {
+                max-width: 50px;
+            }
+        }
+
+        .number-btn {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--college-white);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+        }
+
+        .number-btn:hover:not(.disabled) {
+            border-color: var(--gold-accent);
+            background: rgba(251, 234, 0, 0.1);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px var(--gold-glow);
+            color: var(--gold-accent);
+        }
+
+        .number-btn.active {
+            background: var(--gold-accent);
+            color: #1a0033;
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 30px var(--gold-glow);
+            transform: scale(1.1);
+            z-index: 10;
+            opacity: 1 !important;
+        }
+
+        .number-btn.disabled {
+            opacity: 0;
+            pointer-events: none;
+            cursor: default;
+            transform: scale(0.8);
+            transition: var(--transition);
+        }
+
+        /* Question Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .question-modal {
+            background: linear-gradient(135deg, #30005d 0%, #1a0033 100%);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            box-shadow: 0 0 30px rgba(251, 204, 5, 0.2);
+            position: relative;
+            border: 1px solid rgba(251, 204, 5, 0.3);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(251, 204, 5, 0.2);
+        }
+
+        .question-position {
+            background: var(--gold-accent);
+            color: #30005d;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(251, 204, 5, 0.3);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--gold-accent);
+        }
+
+        .close-btn:hover {
+            background: var(--gold-accent);
+            color: #30005d;
+            transform: rotate(90deg);
+        }
+
+        .question-text {
+            font-size: 1.8rem;
+            line-height: 1.4;
+            margin: 2.5rem auto;
+            color: var(--college-white);
+            padding: 3rem 6rem;
+            background: linear-gradient(90deg, #1e2a78 0%, #000055 50%, #1e2a78 100%);
+            border-radius: 0;
+            position: relative;
+            clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+            border: 3px solid var(--gold-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: inset 0 0 30px rgba(255, 234, 0, 0.6), 0 0 40px rgba(255, 234, 0, 0.3);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 800;
+            z-index: 5;
+        }
+
+        /* Connecting Lines */
+        .question-text::before,
+        .question-text::after {
+            content: '';
+            position: absolute;
+            height: 3px;
+            background: var(--gold-accent);
+            width: 150px;
+            top: 50%;
+            z-index: -1;
+            box-shadow: 0 0 15px var(--gold-accent);
+            animation: linePulse 2s infinite ease-in-out;
+        }
+
+        @keyframes linePulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: translateY(-50%) scaleX(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scaleX(1.1);
+                filter: brightness(1.5);
+            }
+        }
+
+        .question-text::before {
+            right: 100%;
+        }
+
+        .question-text::after {
+            left: 100%;
+        }
+
+        /* 30-Second Timer */
+        .timer-container {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .timer-display {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius);
+            border: 2px solid var(--gold-accent);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(251, 204, 5, 0.2);
+        }
+
+        .timer-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold-accent);
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+
+        .timer-label {
+            color: var(--college-gray);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .timer-warning {
+            color: var(--warning-amber);
+            font-weight: 600;
+        }
+
+        .timer-critical {
+            color: var(--error-red);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Choices */
+        .choices-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            padding: 0 2rem;
+        }
+
+        .choice-btn {
+            background: linear-gradient(90deg, #1e2a78 0%, #000055 100%);
+            border: 2px solid var(--gold-accent);
+            border-radius: 0;
+            padding: 1.2rem 2rem 1.2rem 4.5rem;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--college-white);
+            font-size: 1.15rem;
+            font-weight: 700;
+            position: relative;
+            clip-path: polygon(15% 0%, 100% 0%, 100% 50%, 100% 100%, 15% 100%, 0% 50%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .choice-btn:nth-child(even) {
+            clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%, 0% 50%);
+            padding: 1.2rem 4.5rem 1.2rem 2rem;
+            text-align: right;
+            background: linear-gradient(270deg, #1e2a78 0%, #000055 100%);
+        }
+
+        .choice-btn::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--gold-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #30005d;
+            font-size: 0.9rem;
+        }
+
+        .choice-btn:nth-child(even)::before {
+            left: auto;
+            right: 1.5rem;
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, #3c006e 0%, #1e2a78 100%);
+            box-shadow: 0 0 30px rgba(255, 234, 0, 0.6);
+            border-color: #ffffff;
+        }
+
+        .choice-btn:disabled {
+            cursor: default;
+            opacity: 0.9;
+            filter: grayscale(0.5);
+        }
+
+        .choice-btn.correct {
+            background: linear-gradient(90deg, #1b5e20 0%, #00c853 100%) !important;
+            border-color: #00ffa3 !important;
+            box-shadow: 0 0 30px rgba(0, 255, 163, 0.4) !important;
+            color: white !important;
+        }
+
+        .choice-btn.incorrect {
+            background: linear-gradient(90deg, #b71c1c 0%, #d50000 100%) !important;
+            border-color: #ff5252 !important;
+            box-shadow: 0 0 30px rgba(255, 82, 82, 0.4) !important;
+            color: white !important;
+        }
+
+        /* Result Display */
+        .result-container {
+            text-align: center;
+            padding: 2rem;
+            background: var(--college-cream);
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .result-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-message {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--college-white);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 234, 0, 0.3);
+        }
+
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            color: #ffffff;
+            text-align: left;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .correct-answer {
+            color: var(--success-green);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        /* Completion Modal */
+        .completion-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            padding: 1rem;
+        }
+
+        .completion-modal.active {
+            display: flex;
+        }
+
+        .completion-card {
+            background: linear-gradient(135deg, #30005d 0%, #1a0033 100%);
+            border-radius: var(--radius);
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 234, 0, 0.2);
+            border: 1px solid var(--gold-accent);
+            color: var(--college-white);
+        }
+
+        .completion-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold-accent);
+            filter: drop-shadow(0 0 20px var(--gold-glow));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .completion-title {
+            font-size: 2.2rem;
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .completion-message {
+            color: var(--college-gray);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 150px;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--college-blue) 0%, var(--college-navy) 100%);
+            color: var(--college-white);
+            border: 1px solid var(--college-light-blue);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(123, 44, 191, 0.4);
+            border-color: var(--gold-accent);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--college-white);
+            border: 2px solid var(--gold-accent);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--gold-accent);
+            color: #30005d;
+        }
+
+        /* Footer */
+        .college-footer {
+            text-align: center;
+            padding: 3rem;
+            color: var(--college-gray);
+            margin-top: 4rem;
+            border-top: 1px solid rgba(251, 204, 5, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--gold-accent);
+            text-decoration: none;
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-accent);
+            text-decoration: underline;
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .college-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .round-top-bar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+
+            .choices-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .choice-btn,
+            .choice-btn:nth-child(even) {
+                clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+                padding: 1.2rem 1rem 1.2rem 3.5rem;
+                text-align: left;
+            }
+
+            .choice-btn::before,
+            .choice-btn:nth-child(even)::before {
+                left: 1rem;
+                right: auto;
+            }
+
+            .question-text {
+                font-size: 1.4rem;
+                padding: 2rem 1.5rem;
+                margin: 1.5rem auto;
+            }
+
+            .question-text::before,
+            .question-text::after {
+                display: none;
+            }
+        }
+
+        /* Refined Event Focus Banner */
+        .event-banner {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-top: 2px solid var(--gold-accent);
+            border-bottom: 2px solid var(--gold-accent);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .iqubit-focus-logo {
+            height: 350px;
+            /* Even bigger for the better asset */
+            width: auto;
+            border-radius: var(--radius);
+            box-shadow: 0 0 50px rgba(157, 78, 221, 0.3);
+            transition: var(--transition);
+        }
+
+        .iqubit-focus-logo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 80px rgba(157, 78, 221, 0.5);
+        }
+
+        .qubit-gold-text {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--gold-accent);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255, 234, 0, 0.2);
+            margin-top: -1rem;
+            animation: textPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes textPulse {
+
+            0%,
+            100% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.02);
+            }
+        }
+
+        /* Login Screen Styles */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #30005d 0%, #1a0033 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border-top: 2px solid var(--gold-accent);
+        }
+
+        .login-card h2 {
+            font-size: 2.5rem;
+            color: var(--gold-accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .login-card p {
+            color: var(--college-gray);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--gold-accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--gold-accent) 0%, #ff9e00 100%);
+            color: #1a0033;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 234, 0, 0.4);
+        }
+
+        .login-error {
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+            padding: 0.5rem;
+            background: rgba(255, 77, 77, 0.1);
+            border-radius: 8px;
+        }
+
+        #main-app {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-card">
+            <div class="college-logo" style="margin: 0 auto 1.5rem; width: 80px;">
+                <img src="logo.png" alt="Islamiah College Crest">
+            </div>
+            <h2>SECURE ACCESS</h2>
+            <p>Please enter your credentials to continue to the Quiz Platform</p>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="admin@college.edu" required>
+                </div>
+                <div class="input-group">
+                    <label>Security Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-btn">Initialize System</button>
+            </form>
+            <div id="loginError" class="login-error">Invalid email or security password.</div>
+        </div>
+    </div>
+
+    <div id="main-app">
+        <div class="tech-bg" id="techBg"></div>
+        <div class="container">
+            <!-- Header -->
+            <header class="college-header">
+                <div class="college-brand">
+                    <div class="college-logo">
+                        <img src="logo.png" alt="Islamiah College Crest">
+                    </div>
+                    <div class="college-text">
+                        <h1>ISLAMIAH COLLEGE(AUTONOMOUS)</h1>
+                        <p class="subtitle">DEPARTMENT OF COMPUTER SCIENCE,BCA & DATA SCIENCE </p>
+                        <h1>Dream IT'26</h1>
+                    </div>
+                </div>
+
+            </header>
+
+            <!-- Dedicated iqubit Content Section -->
+            <section class="event-banner">
+                <img src="iqubit_final.jpg" alt="iqubit logo" class="iqubit-focus-logo">
+                <div class="qubit-gold-text">IQUBIT</div>
+            </section>
+
+
+
+
+            <!-- Start Screen -->
+            <div id="startScreen">
+                <div class="rounds-container">
+                    <!-- Round 1 - 40 Questions -->
+                    <div class="round-card" data-round="1">
+                        <div class="round-header">
+                            <div class="round-number">01</div>
+
+                        </div>
+                        <div class="round-details">
+                            <div class="detail-item">
+                                <i class="fas fa-question-circle detail-icon"></i>
+                                <div>
+                                    <div class="detail-value">40 Questions</div>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock detail-icon"></i>
+                                <div>
+                                    <div class="detail-value">30 Seconds</div>
+                                    <div class="detail-text">Per Question</div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <button class="start-btn">
+
+                            Start Round 1
+                        </button>
+                    </div>
+
+                    <!-- Round 2 - 20 Questions -->
+                    <div class="round-card" data-round="2">
+                        <div class="round-header">
+                            <div class="round-number">02</div>
+
+                        </div>
+                        <div class="round-details">
+                            <div class="detail-item">
+                                <i class="fas fa-question-circle detail-icon"></i>
+                                <div>
+                                    <div class="detail-value">20 Questions</div>
+
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock detail-icon"></i>
+                                <div>
+                                    <div class="detail-value">30 Seconds</div>
+                                    <div class="detail-text">Per Question</div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <button class="start-btn">
+
+                            Start Round 2
+                        </button>
+                    </div>
+
+                    <!-- Round 3 - 15 Questions -->
+                    <div class="round-card" data-round="3">
+                        <div class="round-header">
+                            <div class="round-number">03</div>
+
+                        </div>
+                        <div class="round-details">
+                            <div class="detail-item">
+                                <i class="fas fa-question-circle detail-icon"></i>
+                                <div>
+                                    <div class="detail-value">15 Questions</div>
+
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock detail-icon"></i>
+                                <div>
+                                    <div class="detail-value">30 Seconds</div>
+                                    <div class="detail-text">Per Question</div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <button class="start-btn">
+
+                            Start Round 3
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Round Screen -->
+            <div id="roundScreen" class="round-screen">
+                <div class="round-top-bar">
+                    <button class="back-btn" id="backButton">
+                        <i class="fas fa-arrow-left"></i>
+                        Return to Rounds
+                    </button>
+                    <div class="round-details-panel">
+                        <h2 id="roundTitle">Round 1</h2>
+                        <p>DREAM IT'26 • 30-second timed questions • Complete all questions</p>
+                    </div>
+                    <button class="action-btn primary" id="finalizeRoundBtn" onclick="markRoundAsCompleted()"
+                        style="display: flex; width: auto; min-width: 180px;">
+                        <i class="fas fa-check-circle"></i>
+                        Finalize Round
+                    </button>
+                </div>
+
+                <!-- Progress -->
+
+
+                <!-- Number Grid (Dynamic per round) -->
+                <div class="numbers-grid" id="numbersGrid">
+                    <!-- Numbers will be generated based on round -->
+                </div>
+            </div>
+
+            <!-- Question Modal -->
+            <div class="modal-overlay" id="questionModal">
+                <div class="question-modal">
+                    <div class="question-header">
+                        <div class="question-position" id="questionPosition">Question 1 of 40</div>
+                        <button class="close-btn" id="closeQuestion">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="question-text" id="questionText"></div>
+
+                    <!-- 30-Second Timer -->
+                    <div class="timer-container">
+                        <div class="timer-display">
+                            <div class="timer-value" id="timerValue">30</div>
+                            <div class="timer-label" id="timerLabel">seconds remaining</div>
+                        </div>
+                    </div>
+
+                    <!-- Choices -->
+                    <div class="choices-container" id="choicesContainer">
+                        <!-- Choices will be generated here -->
+                    </div>
+
+                    <!-- Result Display -->
+                    <div class="result-container" id="resultContainer">
+                        <div class="result-icon" id="resultIcon"></div>
+                        <div class="result-message" id="resultMessage"></div>
+                        <div class="explanation-box" id="explanationBox"></div>
+                        <div class="correct-answer" id="correctAnswer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completion Modal -->
+            <div class="completion-modal" id="completionModal">
+                <div class="completion-card">
+                    <div class="completion-icon">🏆</div>
+                    <h2 class="completion-title">Round Complete</h2>
+                    <p class="completion-message" id="completionMessage">
+                        Congratulations on completing this academic challenge!
+                    </p>
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="markRoundAsCompleted()">
+                            <i class="fas fa-check-circle"></i>
+                            Finalize & Complete
+                        </button>
+                        <button class="action-btn secondary" onclick="resetCurrentRound()">
+                            <i class="fas fa-redo"></i>
+                            Reset Progress
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="college-footer">
+            <p>© 2026 Managed & Designed by <br>fuzailscript.in</p>
+
+        </footer>
+
+        <!-- Audio Elements -->
+        <audio id="alertSound" preload="auto" loop>
+            <source src="analog-timer-74998.mp3" type="audio/mpeg">
+        </audio>
+
+        <audio id="timeUpSound" preload="auto">
+            <source src="buzzer-or-wrong-answer-20582.mp3" type="audio/mpeg">
+        </audio>
+
+        <audio id="wrongSound" preload="auto">
+            <source src="wrong-83488.mp3" type="audio/mpeg">
+        </audio>
+
+        <script>
+            // ============================================
+            // AUTHENTICATION SYSTEM
+            // ============================================
+            const CREDENTIALS = {
+                email: "admin@college.edu",
+                password: "quiz2026"
+            };
+
+            function checkAuth() {
+                const isLogged = localStorage.getItem('isQuizLoggedIn');
+                if (isLogged === 'true') {
+                    const loginOverlay = document.getElementById('loginOverlay');
+                    const mainApp = document.getElementById('main-app');
+                    if (loginOverlay) loginOverlay.style.display = 'none';
+                    if (mainApp) mainApp.style.display = 'block';
+                    // Initialize background only if logged in
+                    if (typeof createTechBackground === 'function') createTechBackground();
+                }
+            }
+
+            function handleLogin(event) {
+                event.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const pass = document.getElementById('loginPassword').value;
+                const error = document.getElementById('loginError');
+
+                if (email === CREDENTIALS.email && pass === CREDENTIALS.password) {
+                    localStorage.setItem('isQuizLoggedIn', 'true');
+                    const loginOverlay = document.getElementById('loginOverlay');
+                    loginOverlay.style.opacity = '0';
+                    loginOverlay.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        loginOverlay.style.display = 'none';
+                        document.getElementById('main-app').style.display = 'block';
+                        if (typeof createTechBackground === 'function') createTechBackground();
+                    }, 500);
+                } else {
+                    error.style.display = 'block';
+                    document.getElementById('loginPassword').value = '';
+                    // Shake effect on error card
+                    const card = document.querySelector('.login-card');
+                    card.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => card.style.animation = '', 500);
+                }
+            }
+
+            // Add shake animation
+            const shakeStyle = document.createElement('style');
+            shakeStyle.innerHTML = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    25% { transform: translateX(-10px); }
+                    75% { transform: translateX(10px); }
+                }
+            `;
+            document.head.appendChild(shakeStyle);
+
+            // ============================================
+            // CAMBRIDGE UNIVERSITY QUIZ
+            // Computer Science Department
+            // ============================================
+            // Round 1: 40 questions
+            // Round 2: 20 questions  
+            // Round 3: 15 questions
+            // 30-second timer per question
+            // ============================================
+
+            // Configuration
+            const TIMER_DURATION = 30; // 30 seconds per question
+            const QUESTION_COUNTS = {
+                1: 40, // Round 1: 40 questions
+                2: 20, // Round 2: 20 questions
+                3: 15  // Round 3: 15 questions
+            };
+
+            // Round Information
+            const ROUND_INFO = {
+                1: {
+                    name: "The Fundamentals",
+                    description: "40 foundational questions",
+                    totalQuestions: 40
+                },
+                2: {
+                    name: "Core Logic",
+                    description: "20 logical reasoning questions",
+                    totalQuestions: 20
+                },
+                3: {
+                    name: "Advanced Concepts",
+                    description: "15 expert-level challenges",
+                    totalQuestions: 15
+                }
+            };
+
+            // Questions Database
+            const QUESTIONS = {
+                1: [
+                    {
+                        id: 1,
+                        question: "What is the time complexity of binary search in a sorted array?",
+                        choices: ["O(n)", "O(log n)", "O(n²)", "O(1)"],
+                        correctIndex: 1,
+                        explanation: "Binary search halves the search space each iteration, resulting in O(log n) time complexity."
+                    },
+                    {
+                        id: 2,
+                        question: "Which data structure uses FIFO (First-In-First-Out) principle?",
+                        choices: ["Stack", "Queue", "Tree", "Graph"],
+                        correctIndex: 1,
+                        explanation: "Queues follow FIFO, while stacks follow LIFO (Last-In-First-Out)."
+                    },
+                    {
+                        id: 3,
+                        question: "What does CPU stand for in computer architecture?",
+                        choices: [
+                            "Central Processing Unit",
+                            "Computer Personal Unit",
+                            "Central Process Utility",
+                            "Computer Processing Unit"
+                        ],
+                        correctIndex: 0,
+                        explanation: "The CPU is the primary component that executes instructions in a computer system."
+                    },
+                    {
+                        id: 4,
+                        question: "What is the purpose of an operating system kernel?",
+                        choices: [
+                            "Manage hardware resources",
+                            "Provide user interface",
+                            "Run application software",
+                            "Store user data"
+                        ],
+                        correctIndex: 0,
+                        explanation: "The kernel manages system resources and provides core services for applications."
+                    },
+                    {
+                        id: 5,
+                        question: "Which programming paradigm focuses on objects and classes?",
+                        choices: ["Functional", "Object-Oriented", "Procedural", "Logical"],
+                        correctIndex: 1,
+                        explanation: "Object-oriented programming organizes code around objects and their interactions."
+                    }
+                ],
+                2: [
+                    {
+                        id: 1,
+                        question: "What does 'SOLID' represent in software design?",
+                        choices: [
+                            "Software Optimization and Logical Implementation Design",
+                            "Single responsibility, Open-closed, Liskov substitution, Interface segregation, Dependency inversion",
+                            "System Organization and Logical Integration Development",
+                            "Structured Object-oriented Language for Interface Design"
+                        ],
+                        correctIndex: 1,
+                        explanation: "SOLID are five design principles for making object-oriented designs more understandable and maintainable."
+                    },
+                    {
+                        id: 2,
+                        question: "Which testing approach verifies individual software components?",
+                        choices: ["Integration Testing", "Unit Testing", "System Testing", "Acceptance Testing"],
+                        correctIndex: 1,
+                        explanation: "Unit testing focuses on verifying individual components or units of code in isolation."
+                    },
+                    {
+                        id: 3,
+                        question: "What is the purpose of version control systems like Git?",
+                        choices: [
+                            "Manage code changes and collaboration",
+                            "Compile source code",
+                            "Test software functionality",
+                            "Deploy applications"
+                        ],
+                        correctIndex: 0,
+                        explanation: "Version control systems track changes to source code and facilitate team collaboration."
+                    },
+                    {
+                        id: 4,
+                        question: "Which Agile methodology uses time-boxed iterations called sprints?",
+                        choices: ["Kanban", "Scrum", "Waterfall", "Lean"],
+                        correctIndex: 1,
+                        explanation: "Scrum uses fixed-length iterations called sprints, typically 2-4 weeks long."
+                    },
+                    {
+                        id: 5,
+                        question: "What does CI/CD stand for in DevOps?",
+                        choices: [
+                            "Continuous Integration/Continuous Deployment",
+                            "Code Inspection/Code Development",
+                            "Computer Interface/Computer Design",
+                            "Critical Infrastructure/Critical Deployment"
+                        ],
+                        correctIndex: 0,
+                        explanation: "CI/CD automates the software delivery process for faster, more reliable releases."
+                    }
+                ],
+                3: [
+                    {
+                        id: 1,
+                        question: "What is the primary advantage of quantum computing over classical computing?",
+                        choices: [
+                            "Faster clock speeds",
+                            "Parallel processing through superposition",
+                            "Lower power consumption",
+                            "Better graphics rendering"
+                        ],
+                        correctIndex: 1,
+                        explanation: "Quantum computers use superposition to process multiple states simultaneously, enabling parallel computation."
+                    },
+                    {
+                        id: 2,
+                        question: "Which neural network architecture is designed for sequential data?",
+                        choices: ["CNN", "RNN", "GAN", "MLP"],
+                        correctIndex: 1,
+                        explanation: "Recurrent Neural Networks (RNNs) have feedback connections making them suitable for sequential data like text or time series."
+                    },
+                    {
+                        id: 3,
+                        question: "What is the main purpose of blockchain technology?",
+                        choices: [
+                            "Increase internet speed",
+                            "Create decentralized, immutable ledgers",
+                            "Improve graphics performance",
+                            "Reduce storage costs"
+                        ],
+                        correctIndex: 1,
+                        explanation: "Blockchain creates a decentralized, distributed ledger that records transactions in an immutable way."
+                    },
+                    {
+                        id: 4,
+                        question: "Which algorithm is used for asymmetric encryption?",
+                        choices: ["AES", "DES", "RSA", "MD5"],
+                        correctIndex: 2,
+                        explanation: "RSA (Rivest-Shamir-Adleman) is a widely used asymmetric encryption algorithm using public-private key pairs."
+                    },
+                    {
+                        id: 5,
+                        question: "What does 'IoT' stand for in modern computing?",
+                        choices: [
+                            "Internet of Things",
+                            "Integration of Technology",
+                            "International Online Transmission",
+                            "Input/Output Transfer"
+                        ],
+                        correctIndex: 0,
+                        explanation: "IoT refers to the network of physical devices embedded with sensors and software to connect and exchange data."
+                    }
+                ]
+            };
+
+            // Game State
+            let currentRound = 1;
+            let currentQuestionIndex = 0;
+            let gameState = {
+                1: Array(QUESTION_COUNTS[1]).fill(null),
+                2: Array(QUESTION_COUNTS[2]).fill(null),
+                3: Array(QUESTION_COUNTS[3]).fill(null)
+            };
+            let completedRounds = {
+                1: false,
+                2: false,
+                3: false
+            };
+            let timer = null;
+            let timeLeft = TIMER_DURATION;
+            let isAnswerSelected = false;
+
+            // DOM Elements
+            const startScreen = document.getElementById('startScreen');
+            const roundScreen = document.getElementById('roundScreen');
+            const questionModal = document.getElementById('questionModal');
+            const completionModal = document.getElementById('completionModal');
+            const numbersGrid = document.getElementById('numbersGrid');
+            const progressBar = document.getElementById('progressBar');
+            const progressCount = document.getElementById('progressCount');
+            const roundTitle = document.getElementById('roundTitle');
+            const questionText = document.getElementById('questionText');
+            const questionPosition = document.getElementById('questionPosition');
+            const choicesContainer = document.getElementById('choicesContainer');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultMessage = document.getElementById('resultMessage');
+            const explanationBox = document.getElementById('explanationBox');
+            const correctAnswer = document.getElementById('correctAnswer');
+            const timerValue = document.getElementById('timerValue');
+            const timerLabel = document.getElementById('timerLabel');
+            const closeQuestion = document.getElementById('closeQuestion');
+            const backButton = document.getElementById('backButton');
+            const completionMessage = document.getElementById('completionMessage');
+
+            // Audio Elements
+            const alertSound = document.getElementById('alertSound');
+            const timeUpSound = document.getElementById('timeUpSound');
+            const wrongSound = document.getElementById('wrongSound');
+
+            // Initialize
+            checkAuth();
+            init();
+
+            function init() {
+                setupEventListeners();
+                // Set max volume for critical sounds
+                alertSound.volume = 1.0;
+                timeUpSound.volume = 1.0;
+                wrongSound.volume = 1.0;
+                // Initialize tech background
+                createTechBackground();
+            }
+
+            function createTechBackground() {
+                const bg = document.getElementById('techBg');
+                if (!bg) return; // Prevent errors if not logged in
+                const icons = ['fa-code', 'fa-microchip', 'fa-wifi', 'fa-database', 'fa-network-wired', 'fa-robot', 'fa-terminal', 'fa-server', 'fa-laptop-code', 'fa-shield-halved'];
+
+                for (let i = 0; i < 40; i++) {
+                    const icon = document.createElement('i');
+                    const iconClass = icons[Math.floor(Math.random() * icons.length)];
+                    icon.className = `fa-solid ${iconClass} tech-icon`;
+
+                    // Random position and animation properties
+                    icon.style.left = `${Math.random() * 100}%`;
+                    icon.style.animationDelay = `${Math.random() * 20}s`;
+                    icon.style.animationDuration = `${15 + Math.random() * 20}s`;
+                    icon.style.fontSize = `${1.5 + Math.random() * 2.5}rem`;
+
+                    bg.appendChild(icon);
+                }
+            }
+
+            function setupEventListeners() {
+                // Round selection
+                document.querySelectorAll('.round-card').forEach(card => {
+                    card.addEventListener('click', () => selectRound(card.dataset.round));
+                    card.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            selectRound(card.dataset.round);
+                        }
+                    });
+                });
+
+                // Start buttons
+                document.querySelectorAll('.start-btn').forEach((btn, index) => {
+                    btn.addEventListener('click', () => selectRound(index + 1));
+                });
+
+                // Navigation
+                backButton.addEventListener('click', goToStartScreen);
+                closeQuestion.addEventListener('click', closeQuestionModal);
+
+                // Keyboard support
+                document.addEventListener('keydown', handleKeyDown);
+
+                // Close modal on background click
+                questionModal.addEventListener('click', (e) => {
+                    if (e.target === questionModal) closeQuestionModal();
+                });
+            }
+
+            function handleKeyDown(e) {
+                switch (e.key) {
+                    case 'Escape':
+                        if (questionModal.classList.contains('active')) {
+                            closeQuestionModal();
+                        }
+                        break;
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                        if (questionModal.classList.contains('active') && !isAnswerSelected) {
+                            selectAnswer(parseInt(e.key) - 1);
+                        }
+                        break;
+                }
+            }
+
+            function selectRound(roundNumber) {
+                currentRound = parseInt(roundNumber);
+                const roundInfo = ROUND_INFO[currentRound];
+                roundTitle.textContent = `Round ${currentRound}: ${roundInfo.name}`;
+                startScreen.style.display = 'none';
+                roundScreen.style.display = 'block';
+                generateNumberGrid();
+                updateProgress();
+                checkRoundCompletion();
+            }
+
+            function goToStartScreen() {
+                roundScreen.style.display = 'none';
+                questionModal.classList.remove('active');
+                completionModal.classList.remove('active');
+                startScreen.style.display = 'block';
+            }
+
+            function generateNumberGrid() {
+                const questionCount = QUESTION_COUNTS[currentRound];
+                numbersGrid.innerHTML = '';
+
+                // Set appropriate grid class
+                numbersGrid.className = 'numbers-grid';
+                if (currentRound === 1) {
+                    numbersGrid.classList.add('grid-round-1');
+                } else if (currentRound === 2) {
+                    numbersGrid.classList.add('grid-round-2');
+                } else {
+                    numbersGrid.classList.add('grid-round-3');
+                }
+
+                for (let i = 1; i <= questionCount; i++) {
+                    const button = document.createElement('button');
+                    button.className = 'number-btn';
+                    button.textContent = i;
+                    button.dataset.index = i - 1;
+                    button.setAttribute('aria-label', `Question ${i}`);
+
+                    button.addEventListener('click', () => openQuestion(i - 1));
+                    button.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            openQuestion(i - 1);
+                        }
+                    });
+
+                    numbersGrid.appendChild(button);
+                }
+
+                updateNumberGrid();
+            }
+
+            function updateNumberGrid() {
+                const buttons = numbersGrid.querySelectorAll('.number-btn');
+                buttons.forEach((button, index) => {
+                    const state = gameState[currentRound][index];
+                    button.classList.remove('correct', 'incorrect', 'disabled', 'active');
+                    button.disabled = false;
+
+                    if (state !== null) {
+                        button.classList.add('disabled');
+                        button.disabled = true;
+                        if (state === true) {
+                            button.classList.add('correct');
+                        } else {
+                            button.classList.add('incorrect');
+                        }
+                    }
+
+                    if (index === currentQuestionIndex) {
+                        button.classList.add('active');
+                    }
+                });
+            }
+
+            function updateProgress() {
+                const questionCount = QUESTION_COUNTS[currentRound];
+                const attempted = gameState[currentRound].filter(state => state !== null).length;
+                const progress = (attempted / questionCount) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressCount.textContent = `${attempted}/${questionCount}`;
+            }
+
+            function openQuestion(index) {
+                const state = gameState[currentRound][index];
+                if (state !== null) return;
+
+                currentQuestionIndex = index;
+                isAnswerSelected = false;
+                timeLeft = TIMER_DURATION;
+
+                const questionCount = QUESTION_COUNTS[currentRound];
+                questionPosition.textContent = `Question ${index + 1} of ${questionCount}`;
+
+                // Get question (use sample or placeholder)
+                let questionData;
+                if (QUESTIONS[currentRound] && QUESTIONS[currentRound][index % QUESTIONS[currentRound].length]) {
+                    questionData = QUESTIONS[currentRound][index % QUESTIONS[currentRound].length];
+                } else {
+                    questionData = getDefaultQuestion(index, currentRound);
+                }
+
+                questionText.textContent = questionData.question;
+
+                // Display choices
+                choicesContainer.innerHTML = '';
+                const letters = ['A', 'B', 'C', 'D'];
+                questionData.choices.forEach((choice, choiceIndex) => {
+                    const button = document.createElement('button');
+                    button.className = 'choice-btn';
+                    button.textContent = choice;
+                    button.dataset.letter = letters[choiceIndex];
+                    button.setAttribute('aria-label', `Choice ${letters[choiceIndex]}: ${choice}`);
+
+                    button.addEventListener('click', () => selectAnswer(choiceIndex));
+                    button.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            selectAnswer(choiceIndex);
+                        }
+                    });
+
+                    choicesContainer.appendChild(button);
+                });
+
+                // Reset UI
+                resultContainer.style.display = 'none';
+                choicesContainer.style.display = 'grid';
+                timerValue.textContent = timeLeft;
+                timerValue.className = 'timer-value';
+                timerLabel.textContent = 'seconds remaining';
+                timerLabel.className = 'timer-label';
+                updateNumberGrid();
+
+                // Start 30-second timer
+                startTimer();
+
+                // Show modal
+                questionModal.classList.add('active');
+                questionText.focus();
+            }
+
+            function getDefaultQuestion(index, round) {
+                const topics = {
+                    1: ["Algorithms", "Data Structures", "Computer Architecture", "Programming Languages", "Operating Systems"],
+                    2: ["Software Design", "Testing", "Project Management", "Version Control", "Agile Methodologies"],
+                    3: ["Artificial Intelligence", "Cybersecurity", "Cloud Computing", "Blockchain", "Quantum Computing"]
+                };
+
+                const roundTopics = topics[round] || topics[1];
+                const topic = roundTopics[index % roundTopics.length];
+
+                const questionTemplates = {
+                    1: `What is a fundamental concept in ${topic}?`,
+                    2: `Which principle is most important in ${topic}?`,
+                    3: `What is a key consideration in modern ${topic}?`
+                };
+
+                return {
+                    id: index + 1,
+                    question: questionTemplates[round] || questionTemplates[1],
+                    choices: [
+                        "Efficiency and optimization",
+                        "Scalability and performance",
+                        "Security and reliability",
+                        "Maintainability and readability"
+                    ],
+                    correctIndex: index % 4,
+                    explanation: `This question tests understanding of ${topic} concepts, which are essential in computer science education.`
+                };
+            }
+
+            function startTimer() {
+                if (timer) clearInterval(timer);
+
+                // Start ticking sound immediately
+                alertSound.currentTime = 0;
+                alertSound.play().catch(e => console.log("Alert sound play failed:", e));
+
+                timer = setInterval(() => {
+                    timeLeft--;
+                    timerValue.textContent = timeLeft;
+
+                    // Make timer pulse more aggressively at 10 seconds
+                    if (timeLeft === 10) {
+                        timerLabel.textContent = 'seconds remaining (hurry!)';
+                        timerLabel.classList.add('timer-warning');
+                    }
+
+                    // Make timer critical at 5 seconds
+                    if (timeLeft === 5) {
+                        timerValue.classList.add('timer-critical');
+                        timerLabel.classList.remove('timer-warning');
+                        timerLabel.classList.add('timer-critical');
+                    }
+
+                    if (timeLeft <= 0) {
+                        stopAllAudio();
+                        clearInterval(timer);
+                        // Play time-up sound
+                        timeUpSound.play().catch(e => console.log("Time-up sound play failed:", e));
+                        handleTimeout();
+                    }
+                }, 1000);
+            }
+
+            function stopAllAudio() {
+                alertSound.pause();
+                alertSound.currentTime = 0;
+                timeUpSound.pause();
+                timeUpSound.currentTime = 0;
+                wrongSound.pause();
+                wrongSound.currentTime = 0;
+            }
+
+            function selectAnswer(choiceIndex) {
+                if (isAnswerSelected) return;
+
+                isAnswerSelected = true;
+                clearInterval(timer);
+                stopAllAudio();
+
+                let questionData;
+                if (QUESTIONS[currentRound] && QUESTIONS[currentRound][currentQuestionIndex % QUESTIONS[currentRound].length]) {
+                    questionData = QUESTIONS[currentRound][currentQuestionIndex % QUESTIONS[currentRound].length];
+                } else {
+                    questionData = getDefaultQuestion(currentQuestionIndex, currentRound);
+                }
+
+                const isCorrect = choiceIndex === questionData.correctIndex;
+
+                // Play wrong sound if incorrect
+                if (!isCorrect) {
+                    wrongSound.play().catch(e => console.log("Wrong sound play failed:", e));
+                }
+
+                // Update game state
+                gameState[currentRound][currentQuestionIndex] = isCorrect;
+
+                // Show result
+                showResult(isCorrect, questionData, choiceIndex);
+            }
+
+            function handleTimeout() {
+                if (isAnswerSelected) return;
+
+                isAnswerSelected = true;
+
+                let questionData;
+                if (QUESTIONS[currentRound] && QUESTIONS[currentRound][currentQuestionIndex % QUESTIONS[currentRound].length]) {
+                    questionData = QUESTIONS[currentRound][currentQuestionIndex % QUESTIONS[currentRound].length];
+                } else {
+                    questionData = getDefaultQuestion(currentQuestionIndex, currentRound);
+                }
+
+                // Time's up = incorrect
+                gameState[currentRound][currentQuestionIndex] = false;
+
+                // Show result
+                showResult(false, questionData, -1);
+            }
+
+            function showResult(isCorrect, questionData, selectedIndex) {
+                // Update UI
+                resultIcon.textContent = isCorrect ? '✓' : '✗';
+                resultIcon.style.color = isCorrect ? 'var(--success-green)' : 'var(--error-red)';
+                resultMessage.textContent = isCorrect ? 'Correct Answer!' : 'Time\'s Up!';
+                explanationBox.textContent = questionData.explanation;
+
+                // Show correct answer
+                const letters = ['A', 'B', 'C', 'D'];
+                const correctChoice = questionData.choices[questionData.correctIndex];
+                correctAnswer.textContent = `Correct: ${letters[questionData.correctIndex]}. ${correctChoice}`;
+
+                // Highlight choices
+                const choiceButtons = choicesContainer.querySelectorAll('.choice-btn');
+                choiceButtons.forEach((button, index) => {
+                    button.disabled = true;
+                    if (index === questionData.correctIndex) {
+                        button.classList.add('correct');
+                    } else if (index === selectedIndex) {
+                        button.classList.add('incorrect');
+                    }
+                });
+
+                // Show result
+                resultContainer.style.display = 'block';
+                choicesContainer.style.display = 'none';
+
+                // Auto-close after delay
+                setTimeout(() => {
+                    questionModal.classList.remove('active');
+                    updateProgress();
+                    updateNumberGrid();
+                    checkRoundCompletion();
+                }, 2500);
+            }
+
+            function closeQuestionModal() {
+                if (timer) clearInterval(timer);
+                stopAllAudio();
+                questionModal.classList.remove('active');
+
+                // Mark as incorrect if abandoned
+                if (!isAnswerSelected && gameState[currentRound][currentQuestionIndex] === null) {
+                    gameState[currentRound][currentQuestionIndex] = false;
+                    // Play wrong sound for abandoned question
+                    wrongSound.play().catch(e => console.log("Wrong sound play failed:", e));
+                    updateProgress();
+                    updateNumberGrid();
+                    checkRoundCompletion();
+                }
+            }
+
+            function checkRoundCompletion() {
+                const questionCount = QUESTION_COUNTS[currentRound];
+                const attempted = gameState[currentRound].filter(state => state !== null).length;
+
+                if (attempted === questionCount) {
+                    setTimeout(() => {
+                        showCompletionMessage();
+                    }, 500);
+                }
+            }
+
+            function showCompletionMessage() {
+                const questionCount = QUESTION_COUNTS[currentRound];
+                const correctCount = gameState[currentRound].filter(state => state === true).length;
+                const roundName = ROUND_INFO[currentRound].name;
+
+                // Encouragement messages (NO SCORES)
+                let message;
+                if (correctCount >= questionCount * 0.8) {
+                    message = `Outstanding performance in ${roundName}! Your understanding of these concepts is excellent.`;
+                } else if (correctCount >= questionCount * 0.6) {
+                    message = `Strong showing in ${roundName}! You demonstrated solid comprehension of the material.`;
+                } else if (correctCount >= questionCount * 0.4) {
+                    message = `You've completed ${roundName}! The 30-second format challenges quick thinking and recall.`;
+                } else {
+                    message = `Round complete! ${roundName} presents challenging concepts that benefit from review and practice.`;
+                }
+
+                completionMessage.textContent = message;
+                completionModal.classList.add('active');
+            }
+
+            function markRoundAsCompleted() {
+                completedRounds[currentRound] = true;
+                completionModal.classList.remove('active');
+
+                // Apply visual dimming to the round card
+                const roundCard = document.querySelector(`.round-card[data-round="${currentRound}"]`);
+                if (roundCard) {
+                    roundCard.classList.add('completed');
+                }
+
+                // Switch back to start screen
+                roundScreen.style.display = 'none';
+                startScreen.style.display = 'block';
+
+                // Play a success sound if desired (optional)
+            }
+
+            function resetCurrentRound() {
+                const roundName = ROUND_INFO[currentRound].name;
+                if (confirm(`Reset ${roundName}? All your progress in this round will be cleared.`)) {
+                    gameState[currentRound] = Array(QUESTION_COUNTS[currentRound]).fill(null);
+                    completionModal.classList.remove('active');
+                    updateProgress();
+                    updateNumberGrid();
+                }
+            }
+        </script>
+</body>
+
+</html>
