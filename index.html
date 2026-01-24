@@ -629,13 +629,24 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
+            background: rgba(10, 0, 25, 0.85);
+            backdrop-filter: blur(12px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             padding: 1rem;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .modal-overlay.active {
@@ -643,16 +654,51 @@
         }
 
         .question-modal {
-            background: linear-gradient(135deg, #30005d 0%, #1a0033 100%);
-            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 24px;
             padding: 2.5rem;
-            max-width: 900px;
+            max-width: 950px;
             width: 100%;
             max-height: 95vh;
             overflow-y: auto;
-            box-shadow: 0 0 30px rgba(251, 204, 5, 0.2);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 234, 0, 0.1);
             position: relative;
-            border: 1px solid rgba(251, 204, 5, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: modalSlideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(30px) scale(0.95);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .question-modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-accent), transparent);
+            animation: borderGlow 3s infinite linear;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         .question-header {
@@ -696,12 +742,12 @@
         }
 
         .question-text {
-            font-size: 1.8rem;
-            line-height: 1.4;
+            font-size: 2.2rem;
+            line-height: 1.3;
             margin: 2.5rem auto;
             color: var(--college-white);
-            padding: 3rem 6rem;
-            background: linear-gradient(90deg, #1e2a78 0%, #000055 50%, #1e2a78 100%);
+            padding: 3.5rem 6.5rem;
+            background: linear-gradient(135deg, rgba(60, 9, 108, 0.9) 0%, rgba(30, 0, 51, 0.95) 100%);
             border-radius: 0;
             position: relative;
             clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
@@ -710,102 +756,178 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            box-shadow: inset 0 0 30px rgba(255, 234, 0, 0.6), 0 0 40px rgba(255, 234, 0, 0.3);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 0 30px rgba(255, 234, 0, 0.3), 0 10px 40px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             font-weight: 800;
             z-index: 5;
+            transition: var(--transition);
         }
 
-        /* Connecting Lines */
-        .question-text::before,
         .question-text::after {
             content: '';
             position: absolute;
-            height: 3px;
-            background: var(--gold-accent);
-            width: 150px;
-            top: 50%;
-            z-index: -1;
-            box-shadow: 0 0 15px var(--gold-accent);
-            animation: linePulse 2s infinite ease-in-out;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 234, 0, 0.05), transparent);
+            animation: scanline 4s linear infinite;
+            pointer-events: none;
         }
 
-        @keyframes linePulse {
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
 
-            0%,
             100% {
-                opacity: 0.4;
-                transform: translateY(-50%) scaleX(1);
+                transform: translateX(100%);
+            }
+        }
+
+        /* Connecting Lines */
+        .question-text-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .question-text::before,
+        .question-text-line {
+            content: '';
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-accent), var(--gold-accent));
+            width: 120px;
+            top: 50%;
+            right: 100%;
+            z-index: -1;
+            box-shadow: 0 0 15px var(--gold-accent);
+            animation: lineFlowLeft 2s infinite linear;
+        }
+
+        .question-text-line-right {
+            content: '';
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--gold-accent), transparent);
+            width: 120px;
+            top: 50%;
+            left: 100%;
+            z-index: -1;
+            box-shadow: 0 0 15px var(--gold-accent);
+            animation: lineFlowRight 2s infinite linear;
+        }
+
+        @keyframes lineFlowLeft {
+            0% {
+                transform: scaleX(0.8) translateX(20px);
+                opacity: 0.3;
             }
 
             50% {
+                transform: scaleX(1.1) translateX(0);
                 opacity: 1;
-                transform: translateY(-50%) scaleX(1.1);
-                filter: brightness(1.5);
+            }
+
+            100% {
+                transform: scaleX(0.8) translateX(20px);
+                opacity: 0.3;
             }
         }
 
-        .question-text::before {
-            right: 100%;
+        @keyframes lineFlowRight {
+            0% {
+                transform: scaleX(0.8) translateX(-20px);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: scaleX(1.1) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scaleX(0.8) translateX(-20px);
+                opacity: 0.3;
+            }
         }
 
-        .question-text::after {
-            left: 100%;
-        }
-
-        /* 30-Second Timer */
+        /* Modern Circular Timer */
         .timer-container {
-            text-align: center;
-            margin: 1rem 0;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timer-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .timer-circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 6;
+        }
+
+        .timer-circle-fill {
+            fill: none;
+            stroke: var(--gold-accent);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+            filter: drop-shadow(0 0 8px var(--gold-accent));
         }
 
         .timer-display {
-            display: inline-block;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.5rem 1.5rem;
-            border-radius: var(--radius);
-            border: 2px solid var(--gold-accent);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(251, 204, 5, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
         }
 
         .timer-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gold-accent);
-            font-family: monospace;
-            letter-spacing: 2px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--college-white);
+            font-family: 'Inter', monospace;
+            line-height: 1;
         }
 
         .timer-label {
-            color: var(--college-gray);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            color: var(--gold-accent);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
+            font-weight: 700;
+            margin-top: 2px;
+            letter-spacing: 1px;
         }
 
-        .timer-warning {
-            color: var(--warning-amber);
-            font-weight: 600;
+        .timer-critical .timer-circle-fill {
+            stroke: #ff4d4d;
+            filter: drop-shadow(0 0 12px #ff4d4d);
+            animation: timerPulse 0.5s infinite alternate;
         }
 
-        .timer-critical {
-            color: var(--error-red);
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
+        @keyframes timerPulse {
+            from {
                 opacity: 1;
+                transform: scale(1);
             }
 
-            50% {
-                opacity: 0.6;
+            to {
+                opacity: 0.8;
+                transform: scale(1.05);
             }
         }
 
@@ -813,83 +935,86 @@
         .choices-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            padding: 0 2rem;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 0 1rem;
         }
 
         .choice-btn {
-            background: linear-gradient(90deg, #1e2a78 0%, #000055 100%);
-            border: 2px solid var(--gold-accent);
-            border-radius: 0;
-            padding: 1.2rem 2rem 1.2rem 4.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem 2rem 1.5rem 5rem;
             text-align: left;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             color: var(--college-white);
-            font-size: 1.15rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 600;
             position: relative;
-            clip-path: polygon(15% 0%, 100% 0%, 100% 50%, 100% 100%, 15% 100%, 0% 50%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .choice-btn:nth-child(even) {
-            clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%, 0% 50%);
-            padding: 1.2rem 4.5rem 1.2rem 2rem;
-            text-align: right;
-            background: linear-gradient(270deg, #1e2a78 0%, #000055 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
 
         .choice-btn::before {
             content: attr(data-letter);
             position: absolute;
-            left: 1.5rem;
+            left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            width: 30px;
-            height: 30px;
-            background: var(--gold-accent);
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 234, 0, 0.1);
+            border: 1px solid var(--gold-accent);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            color: #30005d;
-            font-size: 0.9rem;
-        }
-
-        .choice-btn:nth-child(even)::before {
-            left: auto;
-            right: 1.5rem;
+            color: var(--gold-accent);
+            font-size: 1.1rem;
+            transition: var(--transition);
         }
 
         .choice-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-            background: linear-gradient(90deg, #3c006e 0%, #1e2a78 100%);
-            box-shadow: 0 0 30px rgba(255, 234, 0, 0.6);
-            border-color: #ffffff;
+            transform: scale(1.02) translateX(5px);
+            background: rgba(255, 234, 0, 0.05);
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 30px rgba(255, 234, 0, 0.15);
         }
 
-        .choice-btn:disabled {
-            cursor: default;
-            opacity: 0.9;
-            filter: grayscale(0.5);
+        .choice-btn:hover::before {
+            background: var(--gold-accent);
+            color: #1a0033;
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .choice-btn::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            background: var(--gold-accent);
+            left: 0;
+            top: 0;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .choice-btn:hover::after {
+            opacity: 1;
         }
 
         .choice-btn.correct {
-            background: linear-gradient(90deg, #1b5e20 0%, #00c853 100%) !important;
-            border-color: #00ffa3 !important;
-            box-shadow: 0 0 30px rgba(0, 255, 163, 0.4) !important;
-            color: white !important;
+            background: rgba(0, 200, 83, 0.1) !important;
+            border-color: #00c853 !important;
+            color: #00ffa3 !important;
         }
 
         .choice-btn.incorrect {
-            background: linear-gradient(90deg, #b71c1c 0%, #d50000 100%) !important;
+            background: rgba(255, 82, 82, 0.1) !important;
             border-color: #ff5252 !important;
-            box-shadow: 0 0 30px rgba(255, 82, 82, 0.4) !important;
-            color: white !important;
+            color: #ff5252 !important;
         }
 
         /* Result Display */
@@ -1305,11 +1430,11 @@
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="input-group">
                     <label>Email Address</label>
-                    <input type="email" id="loginEmail" placeholder="admin@college.edu" required>
+                    <input type="email" id="loginEmail" required>
                 </div>
                 <div class="input-group">
                     <label>Security Password</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    <input type="password" id="loginPassword" required>
                 </div>
                 <button type="submit" class="login-btn">Initialize System</button>
             </form>
@@ -1454,7 +1579,7 @@
                     </div>
                     <button class="action-btn primary" id="finalizeRoundBtn" onclick="markRoundAsCompleted()"
                         style="display: flex; width: auto; min-width: 180px;">
-                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-check-circle"></i>&nbsp;
                         Finalize Round
                     </button>
                 </div>
@@ -1477,13 +1602,21 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <div class="question-text" id="questionText"></div>
+                    <div class="question-text-wrapper">
+                        <div class="question-text-line"></div>
+                        <div class="question-text" id="questionText"></div>
+                        <div class="question-text-line-right"></div>
+                    </div>
 
-                    <!-- 30-Second Timer -->
-                    <div class="timer-container">
+                    <!-- Modern Circular Timer -->
+                    <div class="timer-container" id="timerContainer">
+                        <svg class="timer-svg" viewBox="0 0 100 100">
+                            <circle class="timer-circle-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="timer-circle-fill" id="timerCircle" cx="50" cy="50" r="45"></circle>
+                        </svg>
                         <div class="timer-display">
                             <div class="timer-value" id="timerValue">30</div>
-                            <div class="timer-label" id="timerLabel">seconds remaining</div>
+                            <div class="timer-label" id="timerLabel">sec</div>
                         </div>
                     </div>
 
@@ -1548,8 +1681,8 @@
             // AUTHENTICATION SYSTEM
             // ============================================
             const CREDENTIALS = {
-                email: "admin@college.edu",
-                password: "quiz2026"
+                email: "ditiqubit1@gmail.com",
+                password: "uziqubit2026"
             };
 
             function checkAuth() {
@@ -2050,9 +2183,13 @@
                 resultContainer.style.display = 'none';
                 choicesContainer.style.display = 'grid';
                 timerValue.textContent = timeLeft;
-                timerValue.className = 'timer-value';
-                timerLabel.textContent = 'seconds remaining';
-                timerLabel.className = 'timer-label';
+
+                const container = document.getElementById('timerContainer');
+                const circle = document.getElementById('timerCircle');
+                container.classList.remove('timer-critical');
+                circle.style.strokeDashoffset = 0;
+
+                timerLabel.textContent = 'sec';
                 updateNumberGrid();
 
                 // Start 30-second timer
@@ -2104,17 +2241,19 @@
                     timeLeft--;
                     timerValue.textContent = timeLeft;
 
+                    // Update circular progress
+                    const circle = document.getElementById('timerCircle');
+                    const offset = (283 * (1 - timeLeft / TIMER_DURATION));
+                    circle.style.strokeDashoffset = offset;
+
                     // Make timer pulse more aggressively at 10 seconds
                     if (timeLeft === 10) {
-                        timerLabel.textContent = 'seconds remaining (hurry!)';
-                        timerLabel.classList.add('timer-warning');
+                        timerLabel.textContent = 'hurry!';
                     }
 
                     // Make timer critical at 5 seconds
                     if (timeLeft === 5) {
-                        timerValue.classList.add('timer-critical');
-                        timerLabel.classList.remove('timer-warning');
-                        timerLabel.classList.add('timer-critical');
+                        document.getElementById('timerContainer').classList.add('timer-critical');
                     }
 
                     if (timeLeft <= 0) {
