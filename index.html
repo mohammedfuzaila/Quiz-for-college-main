@@ -19,7 +19,6 @@
             --college-purple-glow: #9d4edd;
             --college-white: #ffffff;
             --college-gray: #fff3b0;
-            /* Light gold tint for secondary text */
             --gold-accent: #ffea00;
             --gold-glow: rgba(255, 234, 0, 0.4);
             --glass-bg: rgba(255, 255, 255, 0.05);
@@ -28,6 +27,22 @@
             --shadow-soft: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --radius: 16px;
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --bg-gradient: radial-gradient(circle at center, #30005d 0%, #1a0033 100%);
+        }
+
+        :root[data-theme="light"] {
+            --college-navy: #f0f2f5;
+            --college-blue: #ffffff;
+            --college-light-blue: #e4e6eb;
+            --college-purple-glow: #7b2cbf;
+            --college-white: #1a0033;
+            --college-gray: #4b4b4b;
+            --gold-accent: #8a6d00;
+            --gold-glow: rgba(138, 109, 0, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --shadow-soft: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            --bg-gradient: radial-gradient(circle at center, #ffffff 0%, #e0e0e0 100%);
         }
 
         /* Base Styles */
@@ -39,7 +54,7 @@
 
         body {
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: radial-gradient(circle at center, #30005d 0%, #1a0033 100%);
+            background: var(--bg-gradient);
             background-attachment: fixed;
             color: var(--college-white);
             line-height: 1.6;
@@ -132,6 +147,33 @@
             height: auto;
             /* Professional Gold Filter */
             filter: brightness(0) saturate(100%) invert(85%) sepia(85%) saturate(1512%) hue-rotate(0deg) brightness(104%) contrast(105%) drop-shadow(0 0 15px var(--gold-glow));
+            transition: var(--transition);
+        }
+
+        :root[data-theme="light"] .college-logo img {
+            filter: none;
+        }
+
+        .theme-toggle-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--gold-accent);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--gold-accent);
+            color: var(--college-navy);
         }
 
         .college-logo:hover {
@@ -1457,7 +1499,10 @@
                         <h1>Dream IT'26</h1>
                     </div>
                 </div>
-
+                <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()"
+                    title="Toggle Light/Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
             </header>
 
             <!-- Dedicated iqubit Content Section -->
@@ -1665,15 +1710,15 @@
 
         <!-- Audio Elements -->
         <audio id="alertSound" preload="auto" loop>
-            <source src="analog-timer-74998.mp3" type="audio/mpeg">
-        </audio>
-
-        <audio id="timeUpSound" preload="auto">
-            <source src="buzzer-or-wrong-answer-20582.mp3" type="audio/mpeg">
+            <source src="timers.mpeg" type="audio/mp4">
         </audio>
 
         <audio id="wrongSound" preload="auto">
-            <source src="wrong-83488.mp3" type="audio/mpeg">
+            <source src="wrong-83488.mp4" type="audio/mp4">
+        </audio>
+
+        <audio id="correctSound" preload="auto">
+            <source src="correct answer.mp4" type="audio/mp4">
         </audio>
 
         <script>
@@ -1686,6 +1731,7 @@
             };
 
             function checkAuth() {
+                initTheme();
                 const isLogged = localStorage.getItem('isQuizLoggedIn');
                 if (isLogged === 'true') {
                     const loginOverlay = document.getElementById('loginOverlay');
@@ -1696,6 +1742,29 @@
                     if (typeof createTechBackground === 'function') createTechBackground();
                 }
             }
+
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            }
+
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('quiz-theme', theme);
+                const icon = document.querySelector('#themeToggle i');
+                if (icon) {
+                    icon.className = theme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+
+            function initTheme() {
+                const savedTheme = localStorage.getItem('quiz-theme') || 'dark';
+                setTheme(savedTheme);
+            }
+
+            // Initial auth and theme check
+            checkAuth();
 
             function handleLogin(event) {
                 event.preventDefault();
@@ -1718,8 +1787,10 @@
                     document.getElementById('loginPassword').value = '';
                     // Shake effect on error card
                     const card = document.querySelector('.login-card');
-                    card.style.animation = 'shake 0.5s ease-in-out';
-                    setTimeout(() => card.style.animation = '', 500);
+                    if (card) {
+                        card.style.animation = 'shake 0.5s ease-in-out';
+                        setTimeout(() => card.style.animation = '', 500);
+                    }
                 }
             }
 
@@ -1968,8 +2039,8 @@
 
             // Audio Elements
             const alertSound = document.getElementById('alertSound');
-            const timeUpSound = document.getElementById('timeUpSound');
             const wrongSound = document.getElementById('wrongSound');
+            const correctSound = document.getElementById('correctSound');
 
             // Initialize
             checkAuth();
@@ -1979,8 +2050,8 @@
                 setupEventListeners();
                 // Set max volume for critical sounds
                 alertSound.volume = 1.0;
-                timeUpSound.volume = 1.0;
                 wrongSound.volume = 1.0;
+                correctSound.volume = 1.0;
                 // Initialize tech background
                 createTechBackground();
             }
@@ -2188,7 +2259,6 @@
                 const circle = document.getElementById('timerCircle');
                 container.classList.remove('timer-critical');
                 circle.style.strokeDashoffset = 0;
-
                 timerLabel.textContent = 'sec';
                 updateNumberGrid();
 
@@ -2259,8 +2329,6 @@
                     if (timeLeft <= 0) {
                         stopAllAudio();
                         clearInterval(timer);
-                        // Play time-up sound
-                        timeUpSound.play().catch(e => console.log("Time-up sound play failed:", e));
                         handleTimeout();
                     }
                 }, 1000);
@@ -2269,10 +2337,10 @@
             function stopAllAudio() {
                 alertSound.pause();
                 alertSound.currentTime = 0;
-                timeUpSound.pause();
-                timeUpSound.currentTime = 0;
                 wrongSound.pause();
                 wrongSound.currentTime = 0;
+                correctSound.pause();
+                correctSound.currentTime = 0;
             }
 
             function selectAnswer(choiceIndex) {
@@ -2291,8 +2359,10 @@
 
                 const isCorrect = choiceIndex === questionData.correctIndex;
 
-                // Play wrong sound if incorrect
-                if (!isCorrect) {
+                // Play respective sound
+                if (isCorrect) {
+                    correctSound.play().catch(e => console.log("Correct sound play failed:", e));
+                } else {
                     wrongSound.play().catch(e => console.log("Wrong sound play failed:", e));
                 }
 
@@ -2349,13 +2419,48 @@
                 resultContainer.style.display = 'block';
                 choicesContainer.style.display = 'none';
 
-                // Auto-close after delay
-                setTimeout(() => {
+                // Closing logic
+                const closeResult = () => {
                     questionModal.classList.remove('active');
                     updateProgress();
                     updateNumberGrid();
                     checkRoundCompletion();
-                }, 2500);
+                };
+
+                if (isCorrect) {
+                    // For correct answers, wait for audio completion or fallback after 8s
+                    let closed = false;
+                    const onAudioEnd = () => {
+                        if (!closed) {
+                            closed = true;
+                            closeResult();
+                            correctSound.removeEventListener('ended', onAudioEnd);
+                        }
+                    };
+
+                    correctSound.addEventListener('ended', onAudioEnd);
+
+                    // Safety fallback
+                    setTimeout(onAudioEnd, 8000);
+                } else if (selectedIndex === -1) {
+                    // For timeouts, use a fixed delay of 2.5s (don't wait for audio)
+                    setTimeout(closeResult, 2500);
+                } else {
+                    // For manual wrong clicks, wait for audio completion or fallback after 8s
+                    let closed = false;
+                    const onAudioEnd = () => {
+                        if (!closed) {
+                            closed = true;
+                            closeResult();
+                            wrongSound.removeEventListener('ended', onAudioEnd);
+                        }
+                    };
+
+                    wrongSound.addEventListener('ended', onAudioEnd);
+
+                    // Safety fallback (in case audio fails to play or is too long)
+                    setTimeout(onAudioEnd, 8000);
+                }
             }
 
             function closeQuestionModal() {
