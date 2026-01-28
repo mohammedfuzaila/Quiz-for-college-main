@@ -1819,7 +1819,7 @@
             const QUESTION_COUNTS = {
                 1: 40, // Round 1: 40 questions
                 2: 20, // Round 2: 20 questions
-                3: 15  // Round 3: 15 questions
+                3: 20  // Round 3: 20 questions
             };
 
             // Round Information
@@ -1836,8 +1836,8 @@
                 },
                 3: {
                     name: "Advanced Concepts",
-                    description: "15 expert-level challenges",
-                    totalQuestions: 15
+                    description: "20 expert-level challenges",
+                    totalQuestions: 20
                 }
             };
 
@@ -2270,108 +2270,143 @@
                 3: [
                     {
                         id: 1,
-                        question: "The impact of computerization in offices is best seen in:",
-                        choices: ["Increased paperwork", "Faster decision-making", "Reduced employee count always", "Manual record keeping"],
-                        correctIndex: 1,
-                        explanation: "Computers streamline data processing and retrieval, leading to significantly faster and more informed decision-making processes."
+                        question: "Computer generations are classified mainly based on:",
+                        choices: ["Underlying hardware technology", "Speed improvement", "Storage capacity", "Programming language used"],
+                        correctIndex: 0,
+                        explanation: "Each generation of computers is defined by a major technological development that fundamentally changed how computers operate."
                     },
                     {
                         id: 2,
-                        question: "Choosing Python for AI projects is mainly due to its:",
-                        choices: ["Low-level access", "Rich ecosystem of libraries", "Faster execution than C", "Smaller syntax rules"],
-                        correctIndex: 1,
-                        explanation: "Python's extensive libraries like TensorFlow, PyTorch, and Scikit-learn make it the preferred language for AI and Machine Learning."
+                        question: "A language supporting both OOP and procedural styles offers:",
+                        choices: ["Hardware independence", "Faster compilation", "Smaller programs", "Design flexibility"],
+                        correctIndex: 3,
+                        explanation: "Multi-paradigm languages allow developers to choose the best approach for different parts of their application, increasing flexibility."
                     },
                     {
                         id: 3,
-                        question: "Concept drift in ML refers to:",
-                        choices: ["Hardware degradation", "Model overfitting", "Changing data patterns over time", "Training errors"],
+                        question: "Overfitting in ML means the model:",
+                        choices: ["Performs poorly always", "Has less data", "Learns noise instead of patterns", "Uses weak algorithms"],
                         correctIndex: 2,
-                        explanation: "Concept drift occurs when the statistical properties of the target variable, which the model is trying to predict, change over time in unforeseen ways."
+                        explanation: "Overfitting occurs when a model becomes too complex and starts capturing random noise in the training data rather than the underlying pattern."
                     },
                     {
                         id: 4,
-                        question: "Secure websites build user trust mainly through:",
-                        choices: ["Attractive design", "HTTPS and certificates", "Faster loading", "Advertisements"],
-                        correctIndex: 1,
-                        explanation: "HTTPS and SSL/TLS certificates verify a website's identity and ensure that data transmitted between the user and the site remains private."
+                        question: "Zero-day vulnerabilities are dangerous because they are:",
+                        choices: ["Exploited before fixes exist", "Easy to detect", "Already patched", "User-created"],
+                        correctIndex: 0,
+                        explanation: "A zero-day vulnerability is a software flaw unknown to the vendor, meaning no patch exists when it is first exploited by attackers."
                     },
                     {
                         id: 5,
-                        question: "Scalability in systems means the ability to:",
-                        choices: ["Reduce costs", "Handle growth efficiently", "Improve security", "Increase complexity"],
-                        correctIndex: 1,
-                        explanation: "Scalability is the measure of a system's ability to increase or decrease in performance and cost in response to changes in application and system processing demands."
+                        question: "Virtual memory helps systems by:",
+                        choices: ["Increasing RAM size physically", "Replacing cache", "Speeding up CPU", "Using disk space as memory"],
+                        correctIndex: 3,
+                        explanation: "Virtual memory uses a portion of the hard drive or SSD to simulate additional RAM, allowing the system to run more applications simultaneously."
                     },
                     {
                         id: 6,
-                        question: "Declarative programming focuses more on:",
-                        choices: ["How tasks are done", "Hardware control", "What outcome is needed", "Memory handling"],
-                        correctIndex: 2,
-                        explanation: "Unlike imperative programming which specifies how to achieve a goal, declarative programming focuses on describing what the desired outcome is."
+                        question: "Dynamic typing mainly benefits developers by:",
+                        choices: ["Faster execution", "Flexible variable usage", "Lower memory use", "Strong security"],
+                        correctIndex: 1,
+                        explanation: "Dynamic typing allows variables to change types during execution, offering greater flexibility and faster prototyping for developers."
                     },
                     {
                         id: 7,
-                        question: "Bias-variance tradeoff mainly affects:",
-                        choices: ["Hardware usage", "Model generalization", "Data storage", "Network speed"],
-                        correctIndex: 1,
-                        explanation: "The bias-variance tradeoff describes the balance between a model's ability to represent the training data (low bias) and its ability to generalize to new data (low variance)."
+                        question: "Feature selection improves ML models by:",
+                        choices: ["Increasing dataset size", "Adding randomness", "Removing irrelevant inputs", "Increasing hardware usage"],
+                        correctIndex: 2,
+                        explanation: "Selecting only the most relevant features reduces model complexity, speeds up training, and often improves predictive performance."
                     },
                     {
                         id: 8,
-                        question: "Zero Trust security assumes:",
-                        choices: ["Internal users are safe", "External users are blocked", "No implicit trust", "Passwords are enough"],
-                        correctIndex: 2,
-                        explanation: "Zero Trust is a security framework requiring all users, whether in or outside the organization's network, to be authenticated, authorized, and continuously validated."
+                        question: "End-to-end encryption ensures data is readable only by:",
+                        choices: ["Network providers", "Sender and receiver", "Hackers", "Firewalls"],
+                        correctIndex: 1,
+                        explanation: "End-to-end encryption protects data so that only the communicating users can decrypt and read the messages, even if intercepted."
                     },
                     {
                         id: 9,
-                        question: "Software updates are critical mainly to:",
-                        choices: ["Change interface", "Fix bugs and vulnerabilities", "Increase file size", "Remove features"],
-                        correctIndex: 1,
-                        explanation: "Regular software updates provide critical security patches that protect systems from newly discovered vulnerabilities and cyber threats."
+                        question: "Computer architecture mainly defines:",
+                        choices: ["User interface", "Application layout", "System-level design", "Internet speed"],
+                        correctIndex: 2,
+                        explanation: "Computer architecture refers to the conceptual design and fundamental operational structure of a computer system's core components."
                     },
                     {
                         id: 10,
-                        question: "Asynchronous programming helps mainly with:",
-                        choices: ["CPU speed", "Handling concurrent tasks", "Code readability", "Hardware access"],
-                        correctIndex: 1,
-                        explanation: "Asynchronous programming allows a program to start a potentially long-running task and still be responsive to other events while that task runs in the background."
+                        question: "Recursion is preferred when a problem:",
+                        choices: ["Has repetitive structure", "Is time-critical", "Needs fast output", "Uses large memory"],
+                        correctIndex: 0,
+                        explanation: "Recursion is a natural fit for problems that can be broken down into smaller, identical sub-problems, such as tree traversals."
                     },
                     {
                         id: 11,
-                        question: "Explainable AI is important mainly for:",
-                        choices: ["Faster training", "User trust and transparency", "Reducing data size", "Hardware optimization"],
-                        correctIndex: 1,
-                        explanation: "Explainable AI (XAI) refers to methods and techniques that produce human-understandable explanations for the decisions made by AI models."
+                        question: "NLP enables machines to:",
+                        choices: ["Read images", "Improve hardware design", "Process human language", "Control robots"],
+                        correctIndex: 2,
+                        explanation: "Natural Language Processing (NLP) is the branch of AI that focuses on enabling computers to understand, interpret, and generate human language."
                     },
                     {
                         id: 12,
-                        question: "Biometric authentication improves security because it relies on:",
-                        choices: ["Remembered information", "Physical or behavioral traits", "External devices only", "Network location"],
-                        correctIndex: 1,
-                        explanation: "Biometrics use unique biological or behavioral characteristics, making it much harder for attackers to steal or replicate than traditional passwords."
+                        question: "Network latency mainly affects:",
+                        choices: ["Storage size", "System security", "Power usage", "Data transfer delay"],
+                        correctIndex: 3,
+                        explanation: "Latency measures the time it takes for a data packet to travel from its source to its destination across a network."
                     },
                     {
                         id: 13,
-                        question: "Open-source software benefits organizations by offering:",
-                        choices: ["Guaranteed support", "Vendor lock-in", "Transparency and flexibility", "No maintenance need"],
-                        correctIndex: 2,
-                        explanation: "Open-source software provides full access to the source code, allowing organizations to inspect it for security and customize it to their specific needs."
+                        question: "Multitasking OS improves performance by:",
+                        choices: ["Sharing CPU time efficiently", "Running one task faster", "Increasing RAM size", "Reducing software count"],
+                        correctIndex: 0,
+                        explanation: "Multitasking allows the OS to rapidly switch between different tasks, making efficient use of CPU cycles and improving user perceived speed."
                     },
                     {
                         id: 14,
-                        question: "Functional programming suits parallel systems because it:",
-                        choices: ["Avoids shared state", "Uses global variables", "Depends on hardware", "Requires compilers only"],
-                        correctIndex: 0,
-                        explanation: "By avoiding mutable state and side effects, functional programming naturally eliminates data races, making it easier to write safe parallel code."
+                        question: "Garbage collection helps by:",
+                        choices: ["Removing syntax errors", "Increasing speed", "Managing unused memory", "Encrypting data"],
+                        correctIndex: 2,
+                        explanation: "Garbage collection is an automatic memory management process that identifies and reclaims memory no longer being used by the program."
                     },
                     {
                         id: 15,
-                        question: "Ethical AI focuses mainly on:",
-                        choices: ["Faster models", "Higher accuracy", "Responsible and fair usage", "Data volume"],
+                        question: "Reinforcement learning is based on:",
+                        choices: ["Predefined labels", "Random guessing", "Supervised feedback", "Trial and reward mechanism"],
+                        correctIndex: 3,
+                        explanation: "In reinforcement learning, an agent learns to make decisions by performing actions in an environment to maximize a cumulative reward."
+                    },
+                    {
+                        id: 16,
+                        question: "A DDoS attack mainly targets:",
+                        choices: ["Data integrity", "Network availability", "User privacy", "Password strength"],
+                        correctIndex: 1,
+                        explanation: "A Distributed Denial of Service (DDoS) attack attempts to crash a network or service by overwhelming it with a flood of internet traffic."
+                    },
+                    {
+                        id: 17,
+                        question: "Embedded systems are designed mainly for:",
+                        choices: ["General-purpose computing", "High storage tasks", "Dedicated functions", "Internet browsing"],
                         correctIndex: 2,
-                        explanation: "Ethical AI involves ensuring that artificial intelligence systems are developed and used in ways that are fair, transparent, and respect human rights."
+                        explanation: "Embedded systems are specialized computer systems designed to perform dedicated functions within a larger mechanical or electrical system."
+                    },
+                    {
+                        id: 18,
+                        question: "APIs are mainly used to:",
+                        choices: ["Design interfaces", "Allow software interaction", "Control hardware", "Store data"],
+                        correctIndex: 1,
+                        explanation: "Application Programming Interfaces (APIs) allow different software applications to communicate and share data with each other seamlessly."
+                    },
+                    {
+                        id: 19,
+                        question: "Model accuracy alone may be misleading when:",
+                        choices: ["Classes are imbalanced", "Data is balanced", "Data is small", "Hardware is slow"],
+                        correctIndex: 0,
+                        explanation: "In datasets where one class is much more frequent than another, a model can achieve high accuracy by simply predicting the majority class."
+                    },
+                    {
+                        id: 20,
+                        question: "Password managers improve security mainly by:",
+                        choices: ["Making passwords visible", "Reusing passwords", "Disabling authentication", "Generating strong unique passwords"],
+                        correctIndex: 3,
+                        explanation: "Password managers help users create and store complex, unique passwords for every account, reducing the risk of credential stuffing attacks."
                     }
                 ]
             };
@@ -2420,6 +2455,67 @@
             const alertSound = document.getElementById('alertSound');
             const wrongSound = document.getElementById('wrongSound');
             const correctSound = document.getElementById('correctSound');
+
+            // Authentication and Theme Logic
+            const LOGIN_CREDENTIALS = {
+                email: "iqubituz@gmail.com",
+                password: "uziq101"
+            };
+
+            function checkAuth() {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (isLoggedIn === 'true') {
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                    // Re-apply theme if saved
+                    const savedTheme = localStorage.getItem('theme') || 'dark';
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                    const icon = document.querySelector('#themeToggle i');
+                    if (icon) {
+                        icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                } else {
+                    document.getElementById('loginOverlay').style.display = 'flex';
+                    document.getElementById('main-app').style.display = 'none';
+                }
+            }
+
+            function handleLogin(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                const errorMsg = document.getElementById('loginError');
+
+                // Simple validation - accept default or just allow access for demo if needed
+                if ((email === LOGIN_CREDENTIALS.email && password === LOGIN_CREDENTIALS.password) || (email && password === "admin")) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                    createTechBackground();
+                    if (errorMsg) errorMsg.style.display = 'none';
+                } else {
+                    if (errorMsg) {
+                        errorMsg.style.display = 'block';
+                        errorMsg.textContent = "Invalid credentials. Try admin@iqubit.com / admin";
+                    } else {
+                        alert("Invalid credentials. Try admin@iqubit.com / admin");
+                    }
+                }
+            }
+
+            function toggleTheme() {
+                const root = document.documentElement;
+                const currentTheme = root.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', newTheme);
+
+                const icon = document.querySelector('#themeToggle i');
+                if (icon) {
+                    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+
+                localStorage.setItem('theme', newTheme);
+            }
 
             // Initialize
             checkAuth();
