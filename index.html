@@ -1470,12 +1470,10 @@
 
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" id="loginEmail" required>
+                    <input type="email" id="loginEmail" placeholder="Email Address" required>
                 </div>
                 <div class="input-group">
-                    <label>Security Password</label>
-                    <input type="password" id="loginPassword" required>
+                    <input type="password" id="loginPassword" placeholder="Security Password" required>
                 </div>
                 <button type="submit" class="login-btn">Initialize System</button>
             </form>
@@ -1725,8 +1723,8 @@
             // AUTHENTICATION SYSTEM
             // ============================================
             const CREDENTIALS = {
-                email: "ditiqubit1@gmail.com",
-                password: "uziqubit2026"
+                email: "aXEyNkBnbWFpbC5jb20=",
+                password: "dXppcTEwMQ=="
             };
 
             function checkAuth() {
@@ -1771,7 +1769,7 @@
                 const pass = document.getElementById('loginPassword').value;
                 const error = document.getElementById('loginError');
 
-                if (email === CREDENTIALS.email && pass === CREDENTIALS.password) {
+                if (btoa(email) === CREDENTIALS.email && btoa(pass) === CREDENTIALS.password) {
                     localStorage.setItem('isQuizLoggedIn', 'true');
                     const loginOverlay = document.getElementById('loginOverlay');
                     loginOverlay.style.opacity = '0';
@@ -2456,67 +2454,6 @@
             const wrongSound = document.getElementById('wrongSound');
             const correctSound = document.getElementById('correctSound');
 
-            // Authentication and Theme Logic
-            const LOGIN_CREDENTIALS = {
-                email: "iqubituz@gmail.com",
-                password: "uziq101"
-            };
-
-            function checkAuth() {
-                const isLoggedIn = localStorage.getItem('isLoggedIn');
-                if (isLoggedIn === 'true') {
-                    document.getElementById('loginOverlay').style.display = 'none';
-                    document.getElementById('main-app').style.display = 'block';
-                    // Re-apply theme if saved
-                    const savedTheme = localStorage.getItem('theme') || 'dark';
-                    document.documentElement.setAttribute('data-theme', savedTheme);
-                    const icon = document.querySelector('#themeToggle i');
-                    if (icon) {
-                        icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-                    }
-                } else {
-                    document.getElementById('loginOverlay').style.display = 'flex';
-                    document.getElementById('main-app').style.display = 'none';
-                }
-            }
-
-            function handleLogin(e) {
-                e.preventDefault();
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
-                const errorMsg = document.getElementById('loginError');
-
-                // Simple validation - accept default or just allow access for demo if needed
-                if ((email === LOGIN_CREDENTIALS.email && password === LOGIN_CREDENTIALS.password) || (email && password === "admin")) {
-                    localStorage.setItem('isLoggedIn', 'true');
-                    document.getElementById('loginOverlay').style.display = 'none';
-                    document.getElementById('main-app').style.display = 'block';
-                    createTechBackground();
-                    if (errorMsg) errorMsg.style.display = 'none';
-                } else {
-                    if (errorMsg) {
-                        errorMsg.style.display = 'block';
-                        errorMsg.textContent = "Invalid credentials. Try admin@iqubit.com / admin";
-                    } else {
-                        alert("Invalid credentials. Try admin@iqubit.com / admin");
-                    }
-                }
-            }
-
-            function toggleTheme() {
-                const root = document.documentElement;
-                const currentTheme = root.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                root.setAttribute('data-theme', newTheme);
-
-                const icon = document.querySelector('#themeToggle i');
-                if (icon) {
-                    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-                }
-
-                localStorage.setItem('theme', newTheme);
-            }
-
             // Initialize
             checkAuth();
             init();
@@ -2902,39 +2839,17 @@
                     checkRoundCompletion();
                 };
 
+                // Auto-close after 2 seconds as requested
+                setTimeout(() => {
+                    closeResult();
+                    if (typeof stopAllAudio === 'function') stopAllAudio();
+                }, 2000);
+
+                // Try playing audio (if available) but don't block closing
                 if (isCorrect) {
-                    // For correct answers, wait for audio completion or fallback after 8s
-                    let closed = false;
-                    const onAudioEnd = () => {
-                        if (!closed) {
-                            closed = true;
-                            closeResult();
-                            correctSound.removeEventListener('ended', onAudioEnd);
-                        }
-                    };
-
-                    correctSound.addEventListener('ended', onAudioEnd);
-
-                    // Safety fallback
-                    setTimeout(onAudioEnd, 8000);
-                } else if (selectedIndex === -1) {
-                    // For timeouts, use a fixed delay of 2.5s (don't wait for audio)
-                    setTimeout(closeResult, 2500);
+                    if (correctSound) correctSound.play().catch(() => { });
                 } else {
-                    // For manual wrong clicks, wait for audio completion or fallback after 8s
-                    let closed = false;
-                    const onAudioEnd = () => {
-                        if (!closed) {
-                            closed = true;
-                            closeResult();
-                            wrongSound.removeEventListener('ended', onAudioEnd);
-                        }
-                    };
-
-                    wrongSound.addEventListener('ended', onAudioEnd);
-
-                    // Safety fallback (in case audio fails to play or is too long)
-                    setTimeout(onAudioEnd, 8000);
+                    if (wrongSound) wrongSound.play().catch(() => { });
                 }
             }
 
