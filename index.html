@@ -1455,11 +1455,122 @@
         #main-app {
             display: none;
         }
+
+        /* Event Ended Popup Overlay */
+        .event-ended-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .event-ended-card {
+            background: linear-gradient(135deg, rgba(60, 9, 108, 0.95) 0%, rgba(30, 0, 51, 0.98) 100%);
+            backdrop-filter: blur(16px);
+            border: 3px solid var(--gold-accent);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 234, 0, 0.3);
+            animation: modalSlideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-ended-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-accent), transparent);
+            animation: borderGlow 3s infinite linear;
+        }
+
+        .event-ended-icon {
+            font-size: 5rem;
+            color: var(--gold-accent);
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px var(--gold-glow));
+            animation: iconPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes iconPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .event-ended-card h1 {
+            font-size: 3rem;
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        .event-ended-card .event-date {
+            font-size: 1.8rem;
+            color: var(--college-white);
+            margin-bottom: 2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .event-ended-card p {
+            font-size: 1.2rem;
+            color: var(--college-gray);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .event-ended-card .thank-you {
+            font-size: 1.5rem;
+            color: var(--gold-accent);
+            margin-top: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+    <!-- Event Ended Popup Overlay -->
+    <div class="event-ended-overlay">
+        <div class="event-ended-card">
+            <div class="event-ended-icon">
+                <i class="fas fa-calendar-times"></i>
+            </div>
+            <h1>Event Completed</h1>
+            <div class="event-date">29th January 2026</div>
+            <p>This event has been successfully completed.</p>
+            <p>Thank you for your interest in IQUBIT!</p>
+            <p class="thank-you">We hope to see you at our next event!</p>
+        </div>
+    </div>
+
     <!-- Login Overlay -->
     <div id="loginOverlay" class="login-overlay">
         <div class="login-card">
