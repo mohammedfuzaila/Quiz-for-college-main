@@ -1484,7 +1484,24 @@
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 234, 0, 0.3);
             animation: modalSlideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
-            overflow: hidden;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* Custom scrollbar for the event card */
+        .event-ended-card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .event-ended-card::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .event-ended-card::-webkit-scrollbar-thumb {
+            background: var(--gold-accent);
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--gold-glow);
         }
 
         .event-ended-card::before {
@@ -1552,6 +1569,34 @@
             font-weight: 700;
             letter-spacing: 1px;
         }
+
+        .view-site-btn {
+            background: linear-gradient(135deg, var(--gold-accent) 0%, #ff9e00 100%);
+            color: #1a0033;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 10px 25px rgba(255, 234, 0, 0.3);
+        }
+
+        .view-site-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 234, 0, 0.5);
+        }
+
+        .view-site-btn i {
+            font-size: 1.2rem;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -1568,6 +1613,9 @@
             <p>This event has been successfully completed.</p>
             <p>Thank you for your interest in IQUBIT!</p>
             <p class="thank-you">We hope to see you at our next event!</p>
+            <button class="view-site-btn" onclick="hideEventOverlay()">
+                <i class="fas fa-eye"></i> View Site
+            </button>
         </div>
     </div>
 
@@ -1830,6 +1878,17 @@
         </audio>
 
         <script>
+            function hideEventOverlay() {
+                const overlay = document.querySelector('.event-ended-overlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    overlay.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 500);
+                }
+            }
+
             // ============================================
             // AUTHENTICATION SYSTEM
             // ============================================
